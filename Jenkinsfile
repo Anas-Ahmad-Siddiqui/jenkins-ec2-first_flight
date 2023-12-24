@@ -9,7 +9,7 @@ pipeline {
         stage('Install Packages') {
             steps {
                 script {
-                    sh 'yarn install'
+                    sh 'npm install'
                 }
             }
         }
@@ -17,7 +17,10 @@ pipeline {
         stage('Run the App') {
             steps {
                 script {
-                    sh 'yarn start &'
+                    sh 'pm2 start server.js --name=expressjs-app'
+                    sh 'pm2 save'
+                    sh 'pm2 startup'
+                    sh 'pm2 restart expressjs-app'
                     sleep 5
                 }
             }
@@ -31,12 +34,12 @@ pipeline {
             }
         }
 
-        stage('Cleanup') {
-            steps {
-                script {
-                    sh 'pkill -f "node"'
-                }
-            }
-        }
+        // stage('Cleanup') {
+        //     steps {
+        //         script {
+        //             sh 'pkill -f "node"'
+        //         }
+        //     }
+        // }
     }
 }
