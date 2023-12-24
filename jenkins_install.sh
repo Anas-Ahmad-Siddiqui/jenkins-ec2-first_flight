@@ -3,6 +3,9 @@
 sudo yum update -y
 sudo yum upgrade -y
 
+# Install git
+sudo yum install git
+
 # Add the Jenkins repo using the following command
 sudo wget -O /etc/yum.repos.d/jenkins.repo \ 
     https://pkg.jenkins.io/redhat-stable/jenkins.repo
