@@ -19,7 +19,6 @@ pipeline {
                 script {
                     sh 'pm2 start server.js --name=expressjs-app'
                     sh 'pm2 save'
-                    sh 'pm2 startup'
                     sh 'pm2 restart expressjs-app'
                     sleep 5
                 }
