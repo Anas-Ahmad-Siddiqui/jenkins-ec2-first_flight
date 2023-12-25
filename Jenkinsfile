@@ -9,6 +9,7 @@ pipeline {
          stage('Execute commands on remote host') {
             steps {
                 script {
+                    echo "Exec"
                     // Configure SSH credentials (replace with your credentials)
                     // sshagent (credentials: ['13.234.238.178']) {
                     //     sh "ls"
