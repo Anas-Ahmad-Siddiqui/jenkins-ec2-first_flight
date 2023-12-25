@@ -3,7 +3,7 @@
 echo 'run application_start.sh: ' >> /home/ec2-user/ci-cd_expressjs/deploy.log
 
 cd /home/ec2-user/ci-cd_expressjs >> /home/ec2-user/ci-cd_expressjs/deploy.log
-pm2 start server.js --name=expressjs-app
+pm2 start server.js --name=jenkins-app
 pm2 save
 pm2 startup
 

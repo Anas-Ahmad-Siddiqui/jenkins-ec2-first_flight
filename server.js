@@ -2,7 +2,7 @@ const express = require('express');
 const axios = require('axios')
 
 const app = express();
-const port = 4000;
+const port = 3000;
 
 app.get('/', (req, res) => {
   res.send('<h1>Express Demo App</h1> <h4>Message: Successfully deployed using Jenkins</h4> <p>Version: 1.0<p>');
