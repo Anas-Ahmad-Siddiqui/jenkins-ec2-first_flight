@@ -13,7 +13,16 @@ pipeline {
                 }
             }
             steps {
-                echo "Installing ..."
+                echo "Installing dev ..."
+            }
+
+            when {
+                expression {
+                    BRANCH_MAIN == 'main'
+                }
+            }
+            steps {
+                echo "Installing main ..."
             }
         }
 
