@@ -7,6 +7,11 @@ pipeline {
 
     stages {
         stage('Install Packages') {
+            when {
+                expression {
+                    BRANCH_MAIN == 'dev'
+                }
+            }
             steps {
                 echo "Installing ..."
             }
@@ -22,6 +27,17 @@ pipeline {
             steps {
                 echo "Visiting ..."
             }
+        }
+    }
+    post {
+        always {
+            // 
+        }
+        success {
+            // 
+        }
+        failure {
+            // 
         }
     }
 }
