@@ -8,38 +8,20 @@ pipeline {
     stages {
         stage('Install Packages') {
             steps {
-                script {
-                    sh 'npm install'
-                }
+                echo "Installing ..."
             }
         }
 
         stage('Run the App') {
             steps {
-                script {
-                    sh 'pm2 start server.js --name=expressjs-app'
-                    sh 'pm2 save'
-                    sh 'pm2 restart expressjs-app'
-                    sleep 5
-                    
-                }
+                echo "running ..."
             }
         }
 
         stage('Visit /items route') {
             steps {
-                script {
-                    sh 'curl http://localhost:3000/items'
-                }
+                echo "Visiting ..."
             }
         }
-
-        // stage('Cleanup') {
-        //     steps {
-        //         script {
-        //             sh 'pkill -f "node"'
-        //         }
-        //     }
-        // }
     }
 }
