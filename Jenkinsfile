@@ -8,21 +8,10 @@ pipeline {
     stages {
         stage('Install Packages') {
             when {
-                expression {
-                    BRANCH_MAIN == 'dev'
-                }
+                branch "main"
             }
             steps {
                 echo "Installing dev ..."
-            }
-
-            when {
-                expression {
-                    BRANCH_MAIN == 'main'
-                }
-            }
-            steps {
-                echo "Installing main ..."
             }
         }
 
