@@ -12,8 +12,8 @@ pipeline {
                     // Configure SSH credentials (replace with your credentials)
                     sshagent (credentials: ['13.234.238.178']) {
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@13.232.3.79 'hostname;'"
-                        // sh "scp /deploy.sh ec2-user@13.234.238.178:/home/ec2-user/"
-                        // sh "ssh -o StrictHostKeyChecking=no ec2-user@13.234.238.178 'bash /home/ec2-user/deploy.sh'"
+                        sh "scp /deploy.sh ec2-user@13.232.3.79:/home/ec2-user/"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.232.3.79 'bash /home/ec2-user/deploy.sh'"
                     }
                 }
             }
