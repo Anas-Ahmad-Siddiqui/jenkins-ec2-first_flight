@@ -7,11 +7,9 @@ pipeline {
 
     stages {
         stage('Install Packages') {
-            // when {
-            //     branch "main"
-            // }
+
             steps {
-                echo env.BRANCH_NAME
+                echo env.GIT_BRANCH
             }
         }
 
