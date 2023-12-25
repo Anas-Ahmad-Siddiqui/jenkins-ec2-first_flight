@@ -10,6 +10,7 @@ pipeline {
 
             steps {
                 echo env.GIT_BRANCH
+                echo env.NODE_NAME
             }
         }
 
