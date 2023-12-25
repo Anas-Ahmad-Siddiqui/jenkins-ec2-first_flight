@@ -10,6 +10,7 @@ if [ -d "$directory" ]; then
     # If directory, delete it
     rm -rf "$directory"
     echo "Directory $directory deleted successfully."
+fi
 
 cd /home/ec2-user/
 git clone https://github.com/Anas-Ahmad-Siddiqui/jenkins-ec2-first_flight
