@@ -15,16 +15,9 @@ pipeline {
                         sh "ls"
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@43.205.96.230 'hostname;'"
                         sh "scp deploy.sh ec2-user@43.205.96.230:/home/ec2-user/"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@43.205.96.230 'bash /home/ec2-user/deploy.sh'"
+                        // sh "ssh -o StrictHostKeyChecking=no ec2-user@43.205.96.230 'bash /home/ec2-user/deploy.sh'"
                         
                     }
-                    sh '''
-                        if [ $ERRORLEVEL -eq 1 ]; then
-                            exit 0
-                        else
-                            exit 1
-                        fi
-                    '''
                 }
             }
         }
