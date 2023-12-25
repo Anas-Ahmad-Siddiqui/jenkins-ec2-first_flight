@@ -7,11 +7,11 @@ pipeline {
 
     stages {
         stage('Install Packages') {
-            when {
-                branch "main"
-            }
+            // when {
+            //     branch "main"
+            // }
             steps {
-                echo "Installing dev ..."
+                echo BRANCH_NAME
             }
         }
 
