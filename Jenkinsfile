@@ -11,7 +11,8 @@ pipeline {
                 script {
                     // Configure SSH credentials (replace with your credentials)
                     sshagent (credentials: ['13.126.27.177']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.232.3.79 'bash /scripts/before_install.sh'"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.232.3.79"
+                        sh "cd /home/ec2-user/"
                     }
                 }
             }
