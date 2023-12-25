@@ -9,5 +9,5 @@ pm2 save
 sudo pm2 startup systemd
 
 # nodejs-app is the same name as stored in pm2 process
-# echo 'pm2 restart expressjs-app' >> /home/ec2-user/jenkins-ec2-first_flight/deploy.log
-# pm2 restart expressjs-app >> /home/ec2-user/jenkins-ec2-first_flight/deploy.log
+echo 'pm2 restart expressjs-app' >> /home/ec2-user/jenkins-ec2-first_flight/deploy.log
+pm2 restart expressjs-app >> /home/ec2-user/jenkins-ec2-first_flight/deploy.log
