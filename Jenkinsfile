@@ -6,16 +6,13 @@ pipeline {
     }
 
     stages {
-        stage('SSH') {
+         stage('Execute commands on remote host') {
             steps {
-                script{
-                    def remote = [:]
-                    remote.name = '13.126.27.177'  // Replace with your remote host name
-                    remote.host = '13.126.27.177'  // Replace with remote host IP or hostname
-                    remote.user = 'EC2-USER'   // Replace with remote username
-                    remote.credentialsId = '13.126.27.177' 
-
-                    sshCommand remote: remote, command: 'ls -lrt'
+                script {
+                    // Configure SSH credentials (replace with your credentials)
+                    sshagent (credentials: ['13.126.27.177']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.232.3.79"
+                    }
                 }
             }
         }
