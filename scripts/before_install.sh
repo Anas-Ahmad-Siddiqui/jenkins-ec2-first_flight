@@ -10,6 +10,6 @@ nvm install --lts
 
 npm install pm2@latest -g
 
-sudo ln -s "$(which node)" /sbin/node
-sudo ln -s "$(which npm)" /sbin/npm
-sudo ln -s "$(which pm2)" /sbin/pm2
+sudo ln -sn "$(which node)" /sbin/node
+sudo ln -sn "$(which npm)" /sbin/npm
+sudo ln -sn "$(which pm2)" /sbin/pm2
