@@ -18,7 +18,13 @@ pipeline {
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@43.205.96.230 'bash /home/ec2-user/deploy.sh'"
                         
                     }
-                    IF %ERRORLEVEL% EQU 1 (exit /B 0) ELSE (exit /B 1)
+                    sh '''
+                        if [ $ERRORLEVEL -eq 1 ]; then
+                            exit 0
+                        else
+                            exit 1
+                        fi
+                    '''
                 }
             }
         }
