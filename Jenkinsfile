@@ -60,7 +60,7 @@ pipeline {
                 script {
                     def apiUrl = "http://${TARGET_HOST}:3000/items"
                     // Make a GET request using the sh step to run shell commands
-                    def result = sh(script: "curl -s $apiUrl", returnStatus: true, returnStdout: false)
+                    def result = sh(script: "curl -s $apiUrl >/dev/null 2>&1", returnStatus: true)
                     
                     // Check if the curl command was successful (exit code 0)
                     if (result == 0) {
