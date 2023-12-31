@@ -54,24 +54,18 @@ pipeline {
         stage('Verifying Application Health') {
             steps {
                 script {
-                    fetch("http://13.233.114.148/items")
-                        .then(response => {
-                            // Check if the request was successful (status code 200-299)
-                            if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                            }
-                            
-                            // Parse the response JSON
-                            return response.json();
-                        })
-                        .then(data => {
-                            // Log the received JSON to the console
-                            console.log('Received JSON:', data);
-                        })
-                        .catch(error => {
-                            // Log any errors that occurred during the fetch
-                            console.error('Fetch error:', error);
-                        });
+                    def apiUrl = 'http://13.233.114.148/items'
+                    // Make a GET request using the sh step to run shell commands
+                    def result = sh(script: "curl -s $apiUrl", returnStatus: true)
+                    
+                    // Check if the curl command was successful (exit code 0)
+                    if (result == 0) {
+                        // Parse the JSON response
+                        def jsonResponse = sh(script: "curl -s $apiUrl", returnStdout: true).trim()
+                        echo "Received JSON: ${jsonResponse}"
+                    } else {
+                        error "Failed to make the GET request. Exit code: ${result}"
+                    }
                 }
             }
         }
