@@ -6,16 +6,15 @@ pipeline {
     }
 
     stages {
-         stage('Execute commands on remote host') {
+         stage('Copying Application Files') {
             steps {
                 script {
-                    echo "Exec"
+                    echo "Copying Application Files"
                     // Configure SSH credentials (replace with your credentials)
                     sshagent (credentials: ['13.234.238.178']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@43.205.96.230 'hostname;'"
-                        sh "scp deploy.sh ec2-user@43.205.96.230:/home/ec2-user/"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@43.205.96.230 'bash /home/ec2-user/deploy.sh'"
-                        
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'hostname;'"
+                        sh "scp deploy.sh ec2-user@13.233.114.148:/home/ec2-user/"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/deploy.sh'"
                     }
                 }
             }
@@ -24,20 +23,31 @@ pipeline {
         stage('Install Packages') {
 
             steps {
-                echo env.GIT_BRANCH
-                echo env.NODE_NAME
+                script {
+                    sshagent (credentials: ['13.234.238.178']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/before_install.sh'"
+                    }
+                }
             }
         }
 
-        stage('Run the App') {
+        stage('Install Application Packages') {
             steps {
-                echo "running ..."
+                script {
+                    sshagent (credentials: ['13.234.238.178']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/after_install.sh'"
+                    }
+                }
             }
         }
 
-        stage('Visit /items route') {
+        stage('Starting the Application') {
             steps {
-                echo "Visiting ..."
+                script {
+                    sshagent (credentials: ['13.234.238.178']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/application_start.sh'"
+                    }
+                }
             }
         }
     }
