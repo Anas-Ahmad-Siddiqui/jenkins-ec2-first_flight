@@ -1,31 +1,35 @@
 pipeline {
     agent any
 
+    environment {
+        CREDENTIALS_ID = '13.234.238.178'
+        TARGET_HOST = '13.233.114.148'
+    }
+
     tools {
         nodejs "nodejs"
     }
 
     stages {
-         stage('Copying Application Files') {
+        stage('Copying Application Files') {
             steps {
                 script {
                     echo "Copying Application Files"
                     // Configure SSH credentials (replace with your credentials)
-                    sshagent (credentials: ['13.234.238.178']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'hostname;'"
-                        sh "scp deploy.sh ec2-user@13.233.114.148:/home/ec2-user/"
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/deploy.sh'"
+                    sshagent (credentials: [CREDENTIALS_ID]) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@${TARGET_HOST} 'hostname;'"
+                        sh "scp deploy.sh ec2-user@${TARGET_HOST}:/home/ec2-user/"
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@${TARGET_HOST} 'bash /home/ec2-user/deploy.sh'"
                     }
                 }
             }
         }
 
         stage('Install Dependencies') {
-
             steps {
                 script {
-                    sshagent (credentials: ['13.234.238.178']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/before_install.sh'"
+                    sshagent (credentials: [CREDENTIALS_ID]) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@${TARGET_HOST} 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/before_install.sh'"
                     }
                 }
             }
@@ -34,8 +38,8 @@ pipeline {
         stage('Install Application Packages') {
             steps {
                 script {
-                    sshagent (credentials: ['13.234.238.178']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/after_install.sh'"
+                    sshagent (credentials: [CREDENTIALS_ID]) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@${TARGET_HOST} 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/after_install.sh'"
                     }
                 }
             }
@@ -44,8 +48,8 @@ pipeline {
         stage('Starting the Application') {
             steps {
                 script {
-                    sshagent (credentials: ['13.234.238.178']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.233.114.148 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/application_start.sh'"
+                    sshagent (credentials: [CREDENTIALS_ID]) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@${TARGET_HOST} 'bash /home/ec2-user/jenkins-ec2-first_flight/scripts/application_start.sh'"
                     }
                 }
             }
@@ -54,7 +58,7 @@ pipeline {
         stage('Verifying Application Health') {
             steps {
                 script {
-                    def apiUrl = 'http://13.233.114.148/items'
+                    def apiUrl = "http://${TARGET_HOST}:3000/items"
                     // Make a GET request using the sh step to run shell commands
                     def result = sh(script: "curl -s $apiUrl", returnStatus: true)
                     
