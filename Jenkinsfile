@@ -50,6 +50,31 @@ pipeline {
                 }
             }
         }
+
+        stage('Verifying Application Health') {
+            steps {
+                script {
+                    fetch("http://13.233.114.148/items")
+                        .then(response => {
+                            // Check if the request was successful (status code 200-299)
+                            if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                            }
+                            
+                            // Parse the response JSON
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Log the received JSON to the console
+                            console.log('Received JSON:', data);
+                        })
+                        .catch(error => {
+                            // Log any errors that occurred during the fetch
+                            console.error('Fetch error:', error);
+                        });
+                }
+            }
+        }
     }
     // post {
     //     always {
