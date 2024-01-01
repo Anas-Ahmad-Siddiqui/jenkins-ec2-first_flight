@@ -63,3 +63,5 @@ location /jenkins {
     proxy_pass         "http://127.0.0.1:3000/";
 }
 ```
+
+#### NOTE: https://awswithatiq.com/how-to-install-nginx-in-amazon-linux-2023/
