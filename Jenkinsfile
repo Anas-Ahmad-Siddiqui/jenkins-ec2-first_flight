@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         CREDENTIALS_ID = '13.234.238.178'
-        TARGET_HOST = '13.233.114.148'
+        TARGET_HOST = '15.206.78.9'
     }
 
     tools {
