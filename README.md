@@ -57,7 +57,7 @@ sudo vi /etc/nginx/nginx.conf
 ### Sample code which is added for port forwarding requests 
 
 ```
-location /jenkins {
+location /jenkins/ {
     proxy_set_header   X-Forwarded-For $remote_addr;
     proxy_set_header   Host $http_host;
     proxy_pass         "http://127.0.0.1:3000/";
